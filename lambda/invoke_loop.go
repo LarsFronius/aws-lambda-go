@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strconv"
 	"time"
+	"log"
 
 	"github.com/aws/aws-lambda-go/lambda/messages"
 )
@@ -52,6 +53,7 @@ func handleInvoke(invoke *invoke, function *Function) error {
 			return fmt.Errorf("unexpected error occurred when sending the function error to the API: %v", err)
 		}
 		if functionResponse.Error.ShouldExit {
+			log.Fatal(functionResponse)
 			return fmt.Errorf("calling the handler function resulted in a panic, the process should exit")
 		}
 		return nil
